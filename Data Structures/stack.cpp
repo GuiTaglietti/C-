@@ -5,86 +5,83 @@ using namespace std;
 class Stack{
     int num;
     
-    public:
+    private:
         int arr[MAX];
+        int size = 0;
+    
+    public:
         Stack(){
             num = -1;
         };
         void push(int element);
-        void pop();
+        int pop();
         bool isEmpty();
         int peek();
         int len();
-        bool have(int number); 
+        bool have(int number);
+        void print();
 };
 
 void Stack::push(int element){
-    for(int i = 0; i < MAX; i++){
-        if(arr[i] == -1){
-            arr[i] = element;
-            break;
-        }
-    }
+    arr[size] = element;
+    size++;
 }
 
-void Stack::pop(){
-    for(int i = 0; i < MAX; i++){
-        if(arr[i] == -1){
-            arr[i - 1] = -1;
-            break;
-        }
+int Stack::pop(){
+    if(size > 0){
+        size--;
+        return arr[size];
     }
+    return 0; 
 }
 
 bool Stack::isEmpty(){
-    if(arr[0] == -1){
+    if(size == 0){
         return true;
     }
     return false;
 }
 
 int Stack::peek(){
-    for(int i = 0; i < MAX; i++){
-        if(arr[i] == -1){
-            return arr[i - 1];
-        }
+    if(!isEmpty()){
+        return arr[size - 1];
+    }
+    else{
+        return NULL;
     }
 }
 
 int Stack::len(){
-    int count = 0;
-    for(int i = 0; i < MAX; i++){
-        if(arr[i] != -1){
-            count++;
-        }
-        else{
-            return count;
-        }
-    }
+    return size;
 }
 
 bool Stack::have(int number){
-    for(int i = 0; i < MAX; i++){
+    for(int i = 0; i < size; i++){
         if(arr[i] == number){
             return true;
         }
-        else if(arr[i] == -1){
-            return false;
-        }
     }
+    return false;
+}
+
+void Stack::print(){
+    cout << "Sua pilha: ";
+    for(int i = 0; i < size; i++){
+        cout << arr[i] << " "; 
+    }
+    cout << endl;
 }
 
 int main(){
     class Stack s;
-    memset(s.arr, -1, sizeof(s.arr));
     s.push(10);
     s.push(20);
-    cout << s.arr[0] << " " << s.arr[1] << endl;
+    s.print();
     s.pop();
-    cout << s.arr[0] << " " << s.arr[1] << endl; 
-    cout << s.have(10) << endl;
-    cout << s.isEmpty() << endl;
-    cout << s.peek() << endl;
-    cout << s.len() << endl;
+    s.print();
+    cout << "Contém o elemento?(1 = Sim // 0 = Não): " << s.have(10) << endl;
+    cout << "Está vazia?(1 = Sim // 0 = Não): " << s.isEmpty() << endl;
+    cout << "Ultimo item da pilha(Caso exista): " << s.peek() << endl;
+    cout << "Tamanho da pilha: " << s.len() << endl;
     return 0;
 }
