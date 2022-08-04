@@ -14,10 +14,8 @@ bool have(vc letras, char c){
         if(e == c){
             return true;
         }
-        else{
-            return false;
-        }
     }
+    return false;
 };
 
 //Main e variáveis
