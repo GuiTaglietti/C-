@@ -3,7 +3,7 @@ using namespace std;
 
 template <typename T>
 void insertionsort(T arr[], int size){
-    int control, j; 
+    T control, j; 
     for (int i = 1; i < size; i++){ 
         control = arr[i]; 
         j = i - 1; 
