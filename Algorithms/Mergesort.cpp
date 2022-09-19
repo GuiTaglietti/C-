@@ -28,7 +28,8 @@ void merge(T arr[], int l, int m, int r){
     }
 }
 
-void mergesort(int arr[], int l, int r){
+template <typename T>
+void mergesort(T arr[], int l, int r){
     if(l < r){
         int m = (l + r)/2; 
         mergesort(arr, l, m);  
