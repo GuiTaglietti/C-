@@ -9,7 +9,7 @@
 using namespace std;
 
 // Classes
-
+ 
 class Stack{
     protected:
         int size = -1;
@@ -25,10 +25,7 @@ class Stack{
         void drop();
         void dup();
         void stop();
-        void add();
-        void sub();
-        void mul();
-        void div();
+        void debug();
 };
 
 class Ops : public Stack{
@@ -41,6 +38,15 @@ class Ops : public Stack{
 };
 
 // Construtores
+
+void Stack::debug(){
+    cout << "Pilha: ";
+    for(int i = 0; i < size; i++){
+        cout << arr[i];
+    }
+    cout << endl;
+    cout << "Size: " << size << endl;
+}
 
 bool Stack::isFull(){
     return size >= 15;
@@ -78,19 +84,23 @@ void Stack::stop(){
 }
 
 void Ops::add(){
-    arr[++size] = (arr[size] + arr[size - 1]);
+    arr[0] = (arr[size] + arr[size - 1]);
+    size = 0;
 }
 
 void Ops::sub(){
-    arr[++size] = (arr[size] - arr[size - 1]);
+    arr[0] = (arr[size] - arr[size - 1]);
+    size = 0;
 }
 
 void Ops::mul(){
-    arr[++size] = (arr[size] * arr[size - 1]);
+    arr[0] = (arr[size] * arr[size - 1]);
+    size = 0;
 }
 
 void Ops::div(){
-    arr[++size] = (arr[size] / arr[size - 1]);
+    arr[0] = (arr[size] / arr[size - 1]);
+    size = 0;
 }
 
 // Globais
@@ -99,13 +109,6 @@ string ins[10] = {
     "input", "print", "add",
     "sub", "mul", "div", "swap",
     "drop", "dup", "stop"
-};
-
-char alg[11] = {
-    '0', '1', '2',
-    '3', '4', '5',
-    '6', '7', '8',
-    '9', '.'
 };
 
 string lower(string x){
@@ -125,22 +128,21 @@ bool isOk(string x){
 }
 
 bool isNumber(string x){
-    int ans = 0, ct = 0;
-    for(char e : alg){
-        if(e == x[ct]){
-            ans++;
+   string alg = "0123456789.";
+   for(char e : x){
+        if(count(alg.begin(), alg.end(), e) == 0){
+            return false;
         }
-        ct++;
     }
-    if(ans == x.length()){
-        return true;
-    }
-    return false;
+    return true;
 }
 
 int main(){
     Ops* s = new Ops(); // Inicializador
-    string z = "12.83";
-    cout << isNumber(z) << endl;
+    s->input();
+    s->input();
+    s->debug();
+    s->add();
+    s->debug();
     return 0;
 }
