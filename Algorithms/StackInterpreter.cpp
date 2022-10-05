@@ -41,7 +41,7 @@ class Ops : public Stack{
 
 void Stack::debug(){
     cout << "Pilha: ";
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < size + 1; i++){
         cout << arr[i];
     }
     cout << endl;
