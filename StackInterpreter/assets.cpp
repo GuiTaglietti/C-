@@ -11,20 +11,6 @@ struct logger{
     float val; 
 };
 
-class Memory : public Control{
-    // Talvez precise tratar erros (Verificar!)
-    protected:
-        float mem[256];
-
-    public:
-        Memory(){
-            memset(this->mem, 0, sizeof(this->mem));
-        }
-        void memoryAssign(int local, float value){
-            this->mem[local] = value;
-        }
-};
-
 class Control{
     public:
         int findRange(string x){
@@ -70,6 +56,32 @@ class Control{
             return stoi(hexString(x), 0, 16);
         }
 
+};
+
+class Memory : public Control{
+    protected:
+        float mem[256];
+
+    public:
+        Memory(){
+            memset(this->mem, 0, sizeof(this->mem));
+        }
+        
+        void debug(){
+            cout << "Memória: ";
+            for(int i = 0; i < 5; i++){
+                cout << this->mem[i] << " ";
+            }
+            cout << endl;
+        }
+        
+        void memoryAssign(int local, float value){
+            this->mem[local] = value;
+        }
+
+        float getMemory(string hex){
+            return this->mem[this->hexConverter(hex)];
+        }
 };
 
 class Stack{
@@ -183,3 +195,21 @@ class Operations : public Stack{
             exit(0);
         }
 };
+
+int main(){
+    Memory* m = new Memory();
+    Operations* s = new Operations();
+    cout << "Parse: " << m->hexString("PUSH 8A") << endl;
+    cout << "Valor da parsed string: " << m->hexConverter("PUSH 8A") << endl;
+    s->push(15.5);
+    s->push(20.5);
+    s->show();
+    s->pop();
+    s->show();
+    m->debug();
+    m->memoryAssign(2, 10.5);
+    m->debug();
+    s->push(m->getMemory("PUSH 02"));
+    s->show();
+    s->hlt();
+}
