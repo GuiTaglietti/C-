@@ -1,15 +1,11 @@
 /*
+    
     Gui Taglietti - Assets (Stack interpreter)
-    192370
+
 */
 
 #include <bits/stdc++.h>
 using namespace std;
-
-struct logger{
-    string pos;
-    float val; 
-};
 
 class Control{
     public:
@@ -60,31 +56,41 @@ class Control{
 
 class Memory : public Control{
     protected:
+        int pos = -1;
         float mem[256];
+        float access[256];
+        string hexAccess[256];
+
 
     public:
         Memory(){
             memset(this->mem, 0, sizeof(this->mem));
         }
         
-        void debug(){
-            cout << "Memória: ";
-            for(int i = 0; i < 5; i++){
-                cout << this->mem[i] << " ";
-            }
-            cout << endl;
-        }
-        
-        void memoryAssign(int local, float value){
+        void setMemory(int local, float value){
             this->mem[local] = value;
         }
 
         float getMemory(string hex){
             return this->mem[this->hexConverter(hex)];
         }
+
+        void addInfo(string hex, float value){
+            this->hexAccess[++this->pos] = hex;
+            this->access[this->pos] = value;
+        }
+        
+        void showInfo(){
+            cout << "Endereços modificados na memória:" << endl;
+            for(int i = 0; i <= pos; i++){
+                cout << "Endereço: " << this->hexAccess[i] << " recebeu o valor " <<
+                this->access[i] << endl;
+            }
+        }
+
 };
 
-class Stack{
+class Stack : public Memory{
     private:
         float arr[16];
         int size = -1;
@@ -127,11 +133,6 @@ class Stack{
 
 class Operations : public Stack{
     public:
-        void pushMemory(string x, float value){
-            Memory* m = new Memory();
-            m->memoryAssign(m->hexConverter(x), value);
-        }
-        
         void input(){
             float aux;
             cout << "Digite o valor para ser inserido na pilha: " << endl;
@@ -192,24 +193,48 @@ class Operations : public Stack{
         }
         
         void hlt(){
+            this->showInfo();
             exit(0);
         }
 };
 
+class Instructions : public Operations{
+    private:
+        string ins[14] = {
+            "pushi", "push",
+            "pop", "input",
+            "print", "add",
+            "sub", "mul",
+            "div", "swap",
+            "drop", "dup", "hlt"
+        };
+
+    public:
+        int decode(string order){
+            string aux = this->lower(order);
+            for(int i = 0; i < 14; i++){
+                if(this->ins[i] == aux){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        void solveInstruction(string order){
+            int expr = this->decode(order);
+            switch(expr){
+                case 0:
+                    this->push(this->toFloat(order));
+            }
+        }
+};
+
 int main(){
-    Memory* m = new Memory();
-    Operations* s = new Operations();
-    cout << "Parse: " << m->hexString("PUSH 8A") << endl;
-    cout << "Valor da parsed string: " << m->hexConverter("PUSH 8A") << endl;
-    s->push(15.5);
-    s->push(20.5);
+    Instructions* s = new Instructions();
+    string i;
+    cout << "Digite uma instrução:" << endl;
+    getline(cin, i);
+    s->solveInstruction(i);
     s->show();
-    s->pop();
-    s->show();
-    m->debug();
-    m->memoryAssign(2, 10.5);
-    m->debug();
-    s->push(m->getMemory("PUSH 02"));
-    s->show();
-    s->hlt();
+    return 0;
 }
