@@ -1,7 +1,6 @@
 /*
     
     Gui Taglietti - Assets (Stack interpreter)
-
 */
 
 #include <bits/stdc++.h>
@@ -29,8 +28,8 @@ class Control{
                         lenght += count(vars.begin(), vars.end(), c);
                     }
                 }
-                return lenght;
             }
+            return lenght;
         }
 
         string hexString(string x){
@@ -50,6 +49,17 @@ class Control{
 
         int hexConverter(string x){
             return stoi(hexString(x), 0, 16);
+        }
+
+        string parseInstruction(string x){
+            int l = 0;
+            for(auto c : x){
+                if(c == ' '){
+                    return x.substr(0, l);
+                }
+                l++;
+            }
+            return 0;
         }
 
 };
@@ -221,10 +231,15 @@ class Instructions : public Operations{
         }
 
         void solveInstruction(string order){
-            int expr = this->decode(order);
+            string aux = this->parseInstruction(order);
+            int expr = this->decode(aux);
             switch(expr){
                 case 0:
                     this->push(this->toFloat(order));
+                    break;
+                case 1:
+                    this->push(this->getMemory(order));
+                    break;
             }
         }
 };
@@ -232,9 +247,11 @@ class Instructions : public Operations{
 int main(){
     Instructions* s = new Instructions();
     string i;
+    s->setMemory(138, 2.5);
     cout << "Digite uma instrução:" << endl;
     getline(cin, i);
     s->solveInstruction(i);
     s->show();
+    delete s;
     return 0;
 }
