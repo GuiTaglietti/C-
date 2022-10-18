@@ -218,7 +218,11 @@ class Operations : public Stack{
         }
         
         void hlt(){
+            cout << endl;
             this->showInfo();
+            cout << endl;
+            this->show();
+            cout << endl;
             exit(0);
         }
 };
@@ -317,10 +321,11 @@ class Instructions : public Operations{
 int main(){
     Instructions *s = new Instructions();
     string i;
-    cout << "Digite uma instrução: " << endl;
-    s->setMemory(138, 5.5);
-    getline(cin, i);
-    s->solveInstruction(i);
-    s->show();
+    while(true){
+        cout << "Digite uma instrução:" << endl;
+        getline(cin, i);
+        s->solveInstruction(i);
+    }
+    delete s;
     return 0;
 }
