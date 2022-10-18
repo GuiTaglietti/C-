@@ -1,6 +1,7 @@
 /*
     
     Gui Taglietti - Assets (Stack interpreter)
+
 */
 
 #include <bits/stdc++.h>
@@ -158,21 +159,24 @@ class Operations : public Stack{
             float n1 = this->pop();
             float n2 = this->pop();
             this->push(n2 + n1);
-            cout << "Soma dos valores do topo: " << n1 + n2 << endl;
+            cout << "Foi empilhado o valor " << n2 + n1 << " visto que os valores somados foram " << n2 
+            << " + "  << n1 << endl;
         }
         
         void sub(){
             float n1 = this->pop();
             float n2 = this->pop();
             this->push(n2 - n1);
-            cout << "Subtração dos valores do topo: " << n1 - n2 << endl;
+            cout << "Foi empilhado o valor " << n2 + n1 << " visto que os valores subtraidos foram " << n2 
+            << " - "  << n1 << endl;
         }
         
         void mul(){
             float n1 = this->pop();
             float n2 = this->pop();
             this->push(n2 * n1);
-            cout << "Multiplicação dos valores do topo: " << n1 * n2 << endl;
+            cout << "Foi empilhado o valor " << n2 * n1 << " visto que os valores multiplicados foram " << n2 
+            << " * "  << n1 << endl;
         }
         
         void div(){
@@ -182,7 +186,8 @@ class Operations : public Stack{
             }
             float n2 = this->pop();
             this->push(n2 / n1);
-            cout << "Divisão dos valores do topo: " << n1 / n2 << endl;
+            cout << "Foi empilhado o valor " << n2 / n1 << " visto que os valores divididos foram " << n2 
+            << " / "  << n1 << endl;
         }
         
         void swap(){
@@ -190,6 +195,7 @@ class Operations : public Stack{
             float second = this->pop();
             this->push(first);
             this->push(second);
+            cout << "Valores trocados: " << first << " trocou com " << second << endl;
         }
         
         void drop(){
@@ -231,8 +237,8 @@ class Instructions : public Operations{
         }
 
         void solveInstruction(string order){
-            string aux = this->parseInstruction(order);
-            int expr = this->decode(aux);
+            string aux = this->parseInstruction(order); //Usado no switch
+            int expr = this->decode(aux); //Usado no switch
             switch(expr){
                 case 0:
                     this->push(this->toFloat(order));
@@ -240,18 +246,55 @@ class Instructions : public Operations{
                 case 1:
                     this->push(this->getMemory(order));
                     break;
+                case 2:
+                    float holder = this->pop();
+                    this->setMemory(this->hexConverter(order), holder);
+                    this->addInfo(this->hexString(order), holder);
+                    break;
+                /*
+                case 3:
+                    this->input();
+                    break;
+                case 4:
+                    cout << "Valor retirado e exibido: " << this->pop() << endl;
+                    break;
+                case 5:
+                    this->add();
+                    break;
+                case 6:
+                    this->sub();
+                    break;
+                case 7:
+                    this->mul();
+                    break;
+                case 8:
+                    this->div();
+                    break;
+                case 9:
+                    this->swap();
+                    break;
+                case 10:
+                    cout << "O valor " << this->pop() << " foi retirado da pilha!" << endl;
+                    break;
+                case 11:
+                    this->dup();
+                    cout << "Valor do topo duplicado com sucesso!" << endl; 
+                    break;
+                */
+                case 12:
+                    this->hlt();
+                    break;
             }
         }
 };
 
 int main(){
-    Instructions* s = new Instructions();
+    Instructions *s = new Instructions();
     string i;
-    s->setMemory(138, 2.5);
-    cout << "Digite uma instrução:" << endl;
-    getline(cin, i);
-    s->solveInstruction(i);
-    s->show();
-    delete s;
+    while(true){
+        cout << "Digite uma instrução: " << endl;
+        getline(cin, i);
+        s->solveInstruction(i);
+    }
     return 0;
 }
