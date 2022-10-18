@@ -9,6 +9,15 @@ using namespace std;
 
 class Control{
     public:
+        bool blankSpace(string x){
+            for(auto c : x){
+                if(c == ' '){
+                    return true;
+                }
+            }
+            return false;
+        }
+
         int findRange(string x){
             int range = 0;
             for(char c : x){
@@ -236,22 +245,34 @@ class Instructions : public Operations{
             return -1;
         }
 
-        void solveInstruction(string order){
-            string aux = this->parseInstruction(order); //Usado no switch
-            int expr = this->decode(aux); //Usado no switch
-            switch(expr){
+        int loadInstruction(string order){
+            if(this->blankSpace(order)){
+                string aux = this->parseInstruction(order);
+                int expr = this->decode(aux);
+                return expr;
+            }
+            else{
+                int expr = this->decode(order);
+                return expr;
+            } 
+        }
+
+        void solveInstruction(string ins){
+            int aux = this->loadInstruction(ins);
+            switch(aux){
                 case 0:
-                    this->push(this->toFloat(order));
+                    this->push(this->toFloat(ins));
                     break;
                 case 1:
-                    this->push(this->getMemory(order));
+                    this->push(this->getMemory(ins));
                     break;
                 case 2:
+                {
                     float holder = this->pop();
-                    this->setMemory(this->hexConverter(order), holder);
-                    this->addInfo(this->hexString(order), holder);
+                    this->setMemory(this->hexConverter(ins), holder);
+                    this->addInfo(this->hexString(ins), holder);
                     break;
-                /*
+                }
                 case 3:
                     this->input();
                     break;
@@ -280,10 +301,15 @@ class Instructions : public Operations{
                     this->dup();
                     cout << "Valor do topo duplicado com sucesso!" << endl; 
                     break;
-                */
                 case 12:
                     this->hlt();
                     break;
+                default:
+                {
+                    string error = "INSTRUCTION " + ins + " DOESN'T EXIST!";
+                    throw logic_error(error);
+                    break;
+                }
             }
         }
 };
@@ -291,10 +317,10 @@ class Instructions : public Operations{
 int main(){
     Instructions *s = new Instructions();
     string i;
-    while(true){
-        cout << "Digite uma instrução: " << endl;
-        getline(cin, i);
-        s->solveInstruction(i);
-    }
+    cout << "Digite uma instrução: " << endl;
+    s->setMemory(138, 5.5);
+    getline(cin, i);
+    s->solveInstruction(i);
+    s->show();
     return 0;
 }
