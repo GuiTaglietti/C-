@@ -31,7 +31,7 @@ class Control{
 
         int findLenght(string x){
             int lenght = 0;
-            string vars = "123456789.";
+            string vars = "0123456789.";
             if(findRange(x)){
                 for(char c : x){
                     if(count(vars.begin(), vars.end(), c)){
@@ -157,6 +157,7 @@ class Operations : public Stack{
             float aux;
             cout << "Digite o valor para ser inserido na pilha: " << endl;
             cin >> aux;
+            cin.ignore();
             this->push(aux);
         }
         
