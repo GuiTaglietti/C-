@@ -1,0 +1,3 @@
+sudo apt update
+sudo apt -- A verificar --
+sudo apt install qtcreator 
