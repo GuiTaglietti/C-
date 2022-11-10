@@ -1,10 +1,17 @@
 /*
     
-    Gui Taglietti - Assets (Stack interpreter)
+    -- Gui Taglietti --
+    
+    Machine interpreter based on stack data structure
+    Console version algorithm
 
 */
 
-#include <bits/stdc++.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <algorithm>
+#include <string>
 using namespace std;
 
 class Control{
