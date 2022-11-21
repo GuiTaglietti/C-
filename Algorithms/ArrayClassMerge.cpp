@@ -12,6 +12,11 @@ class Array{
       Array(int size){
           array = new int[size];
       }
+    
+      virtual ~Array(){
+          delete array;
+      }
+    
       void push(int e);
       void mergesort(int arr[], int l, int r);
 };
