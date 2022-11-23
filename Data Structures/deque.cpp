@@ -3,8 +3,6 @@
 using namespace std;
 
 class Deque{
-    int num;
-
     private:
         int arr[MAX];
         int size = 0;
@@ -12,7 +10,7 @@ class Deque{
 
     public:
         Deque(){
-            num = 1;
+            memset(this->arr, 0, sizeof(this->arr));
         };
         void pushFront(int element);
         void pushBack(int element);
@@ -27,8 +25,7 @@ class Deque{
 };
 
 void Deque::pushBack(int element){
-    arr[size] = element;
-    size++;
+    arr[size++] = element;
 }
 
 void Deque::pushFront(int element){
