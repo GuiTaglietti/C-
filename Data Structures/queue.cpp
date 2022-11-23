@@ -3,8 +3,6 @@
 using namespace std;
 
 class Queue{
-    int n;
-    
     private:
         int arr[MAX];
         int size = 0;
@@ -13,7 +11,7 @@ class Queue{
     
     public:
         Queue(){
-            n = 1;
+            memset(this->arr, 0, sizeof(this->arr));
         };
         void push(int element);
         int pop();
@@ -25,8 +23,7 @@ class Queue{
 };
 
 void Queue::push(int element){
-    arr[size] = element;
-    size++;
+    arr[size++] = element;
 }
 
 int Queue::pop(){
