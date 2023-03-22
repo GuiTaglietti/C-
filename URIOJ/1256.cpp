@@ -1,7 +1,7 @@
 
 
 /*
-    Gui Taglietti - URI Online Judge solutions
+    Gui Taglietti -- URI Online Judge solutions
     Problem: https://www.beecrowd.com.br/judge/pt/problems/view/1256
 */
 
