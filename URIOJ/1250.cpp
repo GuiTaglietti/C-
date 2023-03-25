@@ -1,6 +1,6 @@
 /*
     Gui Taglietti - URI Online Judge solutions
-    Problem: https://www.beecrowd.com.br/judge/pt/problems/view/1076
+    Problem: https://www.beecrowd.com.br/judge/pt/problems/view/1250
 */
 
 #include <bits/stdc++.h>
