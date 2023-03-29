@@ -12,6 +12,6 @@ int main(){
     teste1->showStack();
     teste1->pop();
     teste1->showStack();
-    //Stack *teste3 = teste1 + teste2;
+    teste1 += teste2;
     return 0;
 }
