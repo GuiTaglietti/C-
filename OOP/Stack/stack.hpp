@@ -6,13 +6,12 @@ private:
     int *stack;
     int size = -1;
     int max_size;
-    const int DEFAULT_SIZE = 100;
     void setMaxSize(int max_size);
     int getMaxSize(); 
     
 public:
-    Stack(){};
-    Stack(int size){};
+    Stack();
+    Stack(int size);
     virtual ~Stack();
     void push(int value);
     int pop();
