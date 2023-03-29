@@ -3,8 +3,8 @@
 using namespace std;
 
 int main(){
-    Stack* teste1 = new Stack(10);
-    Stack* teste2 = new Stack(10);
+    Stack *teste1 = new Stack(10);
+    Stack *teste2 = new Stack(10);
     teste1->push(10);
     teste1->push(20);
     teste2->push(30);
@@ -12,6 +12,6 @@ int main(){
     teste1->showStack();
     teste1->pop();
     teste1->showStack();
-    Stack *teste3 = teste1 + teste2;
+    //Stack *teste3 = teste1 + teste2;
     return 0;
 }
