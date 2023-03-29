@@ -12,6 +12,7 @@ private:
 public:
     Stack();
     Stack(int size);
+    Stack(const Stack &stack);
     virtual ~Stack();
     void push(int value);
     int pop();
@@ -21,7 +22,7 @@ public:
     int lenght();
     bool have(int value);
     void showStack();
-    Stack* operator+(Stack *stack);    
+    Stack& operator+=(Stack &stack1);    
 };
 
 #endif // STACK_HPP
