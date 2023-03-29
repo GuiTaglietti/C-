@@ -1,4 +1,4 @@
-#include "stack.hpp";
+#include "stack.hpp"
 #include <iostream> // Usado apenas para debug (Mostrar a pilha no método showStack())
 
 void Stack::setMaxSize(int max_size){
@@ -9,12 +9,7 @@ int Stack::getMaxSize(){
     return this->max_size;
 }
 
-Stack::Stack(){
-    this->stack = new int[this->DEFAULT_SIZE];
-    this->setMaxSize(this->DEFAULT_SIZE);
-};
-
-Stack::Stack(int size){
+Stack::Stack(int size = 100){
     this->stack = new int[size];
     this->setMaxSize(size);
 }
@@ -57,7 +52,7 @@ int Stack::peek(){
 
 void Stack::showStack(){
     std::cout << "Pilha: ";
-    for(int i = 0; i < 0; i++){
+    for(int i = 0; i < this->size + 1; i++){
         std::cout << this->stack[i] << " "; 
     }
     std::cout << std::endl;
