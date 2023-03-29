@@ -1,6 +1,5 @@
 //#include <iostream> -- Comentado pois está incluso na classe para fins de debug  
 #include "stack.cpp"
-using namespace std;
 
 int main(){
     Stack *teste1 = new Stack(10);
@@ -12,6 +11,8 @@ int main(){
     teste1->showStack();
     teste1->pop();
     teste1->showStack();
-    teste1 += teste2;
+    *teste1 + teste2;
+    teste1->showStack();
+    std::cout << "Tamanho da nova pilha: " << teste1->getMaxSize() << std::endl;
     return 0;
 }
