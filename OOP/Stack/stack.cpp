@@ -67,6 +67,7 @@ void Stack::showStack(){
     std::cout << std::endl;
 }
 
+/*
 Stack& Stack::operator+=(Stack &stack){
     int i, j;
     this->size = this->size + stack.size;
@@ -75,4 +76,16 @@ Stack& Stack::operator+=(Stack &stack){
     for(j = size; j < stack.size; j++, i++)
         this->stack[i] = stack.stack[i];
     return *this;
+}
+*/
+
+void Stack::operator+(Stack *stack){
+    int new_size = this->getMaxSize() + stack->getMaxSize();
+    Stack *buffer = new Stack(new_size);
+    for(int i = 0; i < this->size + 2; i++) buffer->push(this->stack[i]);
+    for(int i = 0; i < stack->size + 1; i++) buffer->push(stack->stack[i]);
+    this->stack = new int[new_size];
+    this->setMaxSize(new_size);
+    for(int i = 0; i < buffer->lenght(); i++) this->push(buffer->stack[i]);
+    delete buffer;
 }
