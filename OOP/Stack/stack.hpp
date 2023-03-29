@@ -7,12 +7,12 @@ private:
     int size = -1;
     int max_size;
     void setMaxSize(int max_size);
-    int getMaxSize(); 
     
 public:
     Stack();
     Stack(int size);
     Stack(const Stack &stack);
+    int getMaxSize(); 
     virtual ~Stack();
     void push(int value);
     int pop();
@@ -22,7 +22,8 @@ public:
     int lenght();
     bool have(int value);
     void showStack();
-    Stack& operator+=(Stack &stack1);    
+    void operator+(Stack *stack);
+    //Stack& operator+=(Stack &stack1);    
 };
 
 #endif // STACK_HPP
