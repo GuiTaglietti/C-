@@ -11,7 +11,7 @@ using namespace std;
     I didn't separate the files into .h/.hpp and .cpp for faster implementation to save time. 
     I created this just to test the implementation...
     
-    By the way, here are a simple BST :)
+    By the way, here are a simple BST
 
 */
 
