@@ -20,7 +20,7 @@ public:
 // Arquivo .cpp
 
 Teste::Teste(){};
-Teste::Teste(){
+Teste::Teste(int v1, int v2){
     this->x = v1;
     this->y = v2;
 }
