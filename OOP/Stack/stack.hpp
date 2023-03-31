@@ -25,6 +25,8 @@ public:
     Stack operator+(const Stack &stack);
     Stack operator=(Stack &stack);
     friend std::ostream& operator<<(std::ostream os, const Stack &stack);  
+    
+    void debug() const;
 };
 
 #endif // STACK_HPP
