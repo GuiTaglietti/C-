@@ -43,7 +43,7 @@ Stack Stack::operator+(const Stack &stack){
 
 Stack Stack::operator=(Stack &stack){
     delete this->stack;
-    Stack new_stack(stack);
+    Stack new_stack(stack); // Chama o construtor de cópia
     return new_stack;
 }
 
