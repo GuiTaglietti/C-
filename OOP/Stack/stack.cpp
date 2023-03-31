@@ -47,21 +47,12 @@ Stack Stack::operator=(Stack &stack){
     return new_stack;
 }
 
-/*
-std::ostream& operator<<(std::ostream os, const Stack &stack){
+
+std::ostream& operator<<(std::ostream &os, const Stack &stack){
     os << "Pilha: ";
     for(int i = 0; i < stack.size; i++){
         os << stack.stack[i] << " "; 
     }
     os << std::endl;
     return os;
-}
-*/
-
-void Stack::debug() const{
-    std::cout << "Pilha: ";
-    for(int i = 0; i < this->size; i++){
-        std::cout << this->stack[i] << " "; 
-    }
-    std::cout << std::endl;
 }
