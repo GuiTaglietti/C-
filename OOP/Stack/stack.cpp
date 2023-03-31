@@ -25,7 +25,7 @@ bool Stack::have(int value) const{
 }
 
 void Stack::push(int value){
-    if(!this->isFull()) this->stack[++this->size] = value;
+    if(!this->isFull()) this->stack[this->size++] = value;
 }
 
 int Stack::pop(){
@@ -35,10 +35,10 @@ int Stack::pop(){
 
 Stack Stack::operator+(const Stack &stack){
     int new_size = this->getMaxSize() + stack.getMaxSize();
-    Stack buffer(max_size);
-    for(int i = 0; i < this->size; i++) buffer.push(this->stack[i]);
-    for(int i = 0; i < stack.size; i++) buffer.push(stack.stack[i]);
-    return buffer;
+    Stack new_stack(new_size);
+    for(int i = 0; i < this->size; i++) new_stack.push(this->stack[i]);
+    for(int i = 0; i < stack.size; i++) new_stack.push(stack.stack[i]);
+    return new_stack;
 }
 
 Stack Stack::operator=(Stack &stack){
@@ -47,6 +47,7 @@ Stack Stack::operator=(Stack &stack){
     return new_stack;
 }
 
+/*
 std::ostream& operator<<(std::ostream os, const Stack &stack){
     os << "Pilha: ";
     for(int i = 0; i < stack.size; i++){
@@ -54,4 +55,13 @@ std::ostream& operator<<(std::ostream os, const Stack &stack){
     }
     os << std::endl;
     return os;
-}  
+}
+*/
+
+void Stack::debug() const{
+    std::cout << "Pilha: ";
+    for(int i = 0; i < this->size; i++){
+        std::cout << this->stack[i] << " "; 
+    }
+    std::cout << std::endl;
+}
