@@ -1,5 +1,6 @@
 #include "BinaryTree.hpp"
 #include <iostream> // Usar o NULL
+#include <queue> // Usar a fila para a BFS
 
 // Constrói os métodos da classe Node
 
@@ -33,6 +34,20 @@ int Node::getNodeValue(){
 
 BinaryTree::BinaryTree(){
     this->root = NULL;
+}
+
+BinaryTree::~BinaryTree(){
+    if(this->root){
+        this->clear(this->root);
+    }
+}
+
+void BinaryTree::clear(Node *node){
+    if(node){
+        clear(node->getLeftNode());
+        clear(node->getRightNode());
+        delete node;
+    }
 }
 
 void BinaryTree::insert(int value){
@@ -84,5 +99,22 @@ void BinaryTree::posOrder(Node *node){
         posOrder(node->getLeftNode());
         posOrder(node->getRightNode());
         std::cout << node->getNodeValue() << " ";
+    }
+}
+
+void BinaryTree::BFS(Node* node) {
+    if(!node) return;
+    std::queue<Node*> q;
+    q.push(node);
+    while(!q.empty()){
+        Node* current = q.front();
+        q.pop();
+        std::cout << current->getNodeValue() << " ";
+        if(current->getLeftNode()){
+            q.push(current->getLeftNode());
+        }
+        if(current->getRightNode()){
+            q.push(current->getRightNode());
+        }
     }
 }
