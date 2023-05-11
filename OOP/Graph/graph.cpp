@@ -91,8 +91,8 @@ namespace graph{
     size_t graph::Digraph::indegree(const std::string &s){
         size_t count = 0;
         for(auto n : nodes)
-            for (auto &link : n.second.links) 
-                if (link->value == s) count++;
+            for(auto link : n.second.links) 
+                if(link->value == s) count++;
         return count;
     }
 
