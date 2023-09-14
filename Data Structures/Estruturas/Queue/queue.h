@@ -108,7 +108,6 @@ Queue<T> &Queue<T>::operator=(const Queue<T> &rhs){
         delete[] QUEUE;
         MAXSIZE = rhs.size();
         QUEUE = new T[MAXSIZE];
-        #pragma omp parallel for
         for(size_t i = 0; i < MAXSIZE; i++)
             QUEUE[i] = rhs.QUEUE[i];
     }
