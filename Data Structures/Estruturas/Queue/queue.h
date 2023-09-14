@@ -40,7 +40,6 @@ template <class T>
 Queue<T>::Queue(const Queue<T> &queue){
     MAXSIZE = queue.size();
     QUEUE = new T[MAXSIZE];
-    #pragma omp parallel for
     for(size_t i = 0; i < MAXSIZE; i++)
         QUEUE[i] = queue.QUEUE[i];
 }
