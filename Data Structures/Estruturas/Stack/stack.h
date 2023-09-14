@@ -3,11 +3,13 @@
 
 #include <iostream>
 
+typedef unsigned int index_t;
+
 template <class T>
 class Stack{
 public:
     Stack();
-    Stack(size_t SIZE);
+    Stack(size_t _SIZE);
     Stack(const Stack &cpy);
     virtual ~Stack();
     size_t size() const;
@@ -21,25 +23,26 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Stack<FT> &stack);
 
 private:
-    size_t SIZE = 1000;
-    size_t CURRENT = 0;
+    size_t MAXSIZE;
+    index_t CURRENT = 0;
     T *STACK;
 };
 
 template <class T>
-Stack<T>::Stack() : Stack(1000) {}
+Stack<T>::Stack() : Stack(1000){}
 
 template <class T>
 Stack<T>::Stack(size_t _SIZE){
-    SIZE = _SIZE;
-    STACK = new T[SIZE];
+    MAXSIZE = _SIZE;
+    STACK = new T[MAXSIZE];
 }
 
 template <class T>
 Stack<T>::Stack(const Stack<T> &stack){
-    SIZE = stack.size();
-    STACK = new T[SIZE];
-    for(size_t i = 0; i < SIZE; i++)
+    MAXSIZE = stack.size();
+    STACK = new T[MAXSIZE];
+    #pragma omp parallel for
+    for(size_t i = 0; i < MAXSIZE; i++)
         STACK[i] = stack.STACK[i];
 }
 
@@ -68,17 +71,37 @@ bool Stack<T>::find(T element) const{
 }
 
 template <class T>
-int Stack<T>::index_of(T element) const{
-    if(!empty())
-        for(size_t i = 0; i < CURRENT; i++)
-            if(STACK[i] == element) return i;
-    return -1;
+bool Stack<T>::find(T element) const{
+    bool found = false;
+    if(!empty()){
+        #pragma omp parallel for
+        for(size_t i = 0; i < CURRENT; i++){
+            if(STACK[i] == element){
+                #pragma omp critical
+                {
+                    found = true;
+                }
+            }
+        }
+    }
+    return found;
 }
 
 template <class T>
-void Stack<T>::push(T element){
-    if(CURRENT == SIZE) throw std::overflow_error("Stack overflow!");
-    STACK[CURRENT++] = element;
+int Stack<T>::index_of(T element) const{
+    int index = -1;
+    if(!empty()){
+        #pragma omp parallel for
+        for(size_t i = 0; i < CURRENT; i++){
+            if(STACK[i] == element){
+                #pragma omp critical
+                {
+                    index = i;
+                }
+            }
+        }
+    }
+    return index;
 }
 
 template <class T>
@@ -91,9 +114,9 @@ template <class T>
 Stack<T> &Stack<T>::operator=(const Stack<T> &rhs){
     if(this != &rhs){
         delete[] STACK;
-        SIZE = rhs.size();
-        STACK = new T[SIZE];
-        for(size_t i = 0; i < SIZE; i++)
+        MAXSIZE = rhs.size();
+        STACK = new T[MAXSIZE];
+        for(size_t i = 0; i < MAXSIZE; i++)
             STACK[i] = rhs.STACK[i];
     }
     return *this;
