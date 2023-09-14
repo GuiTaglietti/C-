@@ -17,6 +17,6 @@ int main(){
     cout << "Removido o elemento: " << q.pop() << endl;
     cout << "Quantidade de elementos: " << q.size() << endl;
     cout << q << endl;
-    // q.push(15); q.push(15); q.push(15); --> Teste de stack overflow; 
+    // q.push(15); q.push(15); q.push(15); --> Teste de queue overflow; 
     return 0;
 }
