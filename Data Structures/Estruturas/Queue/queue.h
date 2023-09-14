@@ -37,11 +37,11 @@ Queue<T>::Queue(size_t _SIZE){
 }
 
 template <class T>
-Queue<T>::Queue(const Queue<T> &queue){
-    MAXSIZE = queue.size();
+Queue<T>::Queue(const Queue<T> &cpy){
+    MAXSIZE = cpy.size();
     QUEUE = new T[MAXSIZE];
     for(size_t i = 0; i < MAXSIZE; i++)
-        QUEUE[i] = queue.QUEUE[i];
+        QUEUE[i] = cpy.QUEUE[i];
 }
 
 template <class T>
