@@ -1,3 +1,11 @@
+/**
+ * @authors Guilherme Martinelli Taglietti - 192370
+ *          José Paulo Remonti Pereira - 192445
+ * 
+ * @file MAIN
+ * @attention Para funcionar, precisa estar com os arquivos "memoryalloc.cpp" & "memoryalloc.h" na mesma pasta desse arquivo (main.cpp)
+*/
+
 #include "memoryalloc.cpp"
 using namespace SO2;
 
@@ -11,8 +19,8 @@ int main(){
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
         SO2::memoryalloc::aloc_report tempff = ma.first_fit(rands[i]);
-        if(!tempff.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[1m Solicitacao nao pode ser atendida \33[0m" << std::endl;
-        else if(tempff.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
+        if(!tempff.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[31m Solicitacao nao pode ser atendida \33[0m" << std::endl;
+        else if(tempff.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[31m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
     ma.load_from_buffer();
@@ -20,8 +28,8 @@ int main(){
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
         SO2::memoryalloc::aloc_report tempbf = ma.best_fit(rands[i]);
-        if(!tempbf.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[1m Solicitacao nao pode ser atendida \33[0m" << std::endl;
-        else if(tempbf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
+        if(!tempbf.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[31m Solicitacao nao pode ser atendida \33[0m" << std::endl;
+        else if(tempbf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[31m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
     ma.load_from_buffer();
@@ -29,8 +37,8 @@ int main(){
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
         SO2::memoryalloc::aloc_report tempwf = ma.worst_fit(rands[i]);
-        if(!tempwf.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[1m Solicitacao nao pode ser atendida \33[0m" << std::endl;
-        else if(tempwf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
+        if(!tempwf.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[31m Solicitacao nao pode ser atendida \33[0m" << std::endl;
+        else if(tempwf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[31m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
     ma.load_from_buffer();
@@ -38,8 +46,8 @@ int main(){
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
         SO2::memoryalloc::aloc_report tempnf = ma.next_fit(rands[i]);
-        if(!tempnf.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[1m Solicitacao nao pode ser atendida \33[0m" << std::endl;
-        else if(tempnf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
+        if(!tempnf.is_allocated) std::cout << "[" << i << " - " << rands[i] << "] \33[31m Solicitacao nao pode ser atendida \33[0m" << std::endl;
+        else if(tempnf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[31m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
     return 0; 

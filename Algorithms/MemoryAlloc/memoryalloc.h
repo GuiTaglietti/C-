@@ -2,6 +2,7 @@
 #define MEMORY_ALLOC_H
 
 #include <iostream>
+#include <utility>
 
 namespace SO2{
 
@@ -30,7 +31,7 @@ private:
     int BUFFER[MAX_MEM_SIZE];
     size_t NEXT_FIT_INDEX;
     size_t MUTABLE_SIZE = MAX_MEM_SIZE;
-    int LAST_MODDED_VALUE;
+    std::pair<int, int> LAST_MODDED_VALUE;
     void init();
     void realocate(int index);
 };
