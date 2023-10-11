@@ -21,13 +21,16 @@ public:
     aloc_report worst_fit(int N);
     aloc_report next_fit(int N);
     size_t memsize() const;
+    void load_from_buffer();
     memoryalloc& operator=(const memoryalloc &rhs);
     friend std::ostream& operator<<(std::ostream &os, const memoryalloc &ma);
 
 private:
     int MEM[MAX_MEM_SIZE];
+    int BUFFER[MAX_MEM_SIZE];
     size_t NEXT_FIT_INDEX;
     size_t MUTABLE_SIZE = MAX_MEM_SIZE;
+    int LAST_MODDED_VALUE;
     void init();
     void realocate(int index);
 };

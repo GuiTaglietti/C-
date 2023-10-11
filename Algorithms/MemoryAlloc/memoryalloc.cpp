@@ -38,7 +38,7 @@ void SO2::memoryalloc::init(){
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(1, 100);
-    for(size_t i = 0; i < MUTABLE_SIZE; i++) MEM[i] = dist(gen);
+    for(size_t i = 0; i < MUTABLE_SIZE; i++) MEM[i] = BUFFER[i] = dist(gen);
 }
 
 void SO2::memoryalloc::realocate(int index){
@@ -55,12 +55,14 @@ SO2::memoryalloc::aloc_report SO2::memoryalloc::first_fit(int N){
     for(size_t i = 0; i < memsize(); i++){
         if(MEM[i] == N){
             MEM[i] -= N;
+            LAST_MODDED_VALUE = MEM[i];
             aloc.is_perfect_fit = true; aloc.is_allocated = true;
             realocate(i);
             return aloc;
         }
         if(MEM[i] > N){
             MEM[i] -= N;
+            LAST_MODDED_VALUE = MEM[i];
             aloc.is_allocated = true;
             return aloc;
         }
@@ -77,8 +79,9 @@ SO2::memoryalloc::aloc_report SO2::memoryalloc::best_fit(int N){
         }
     if(ii.first == 1e9) return aloc;
     int temp = MEM[ii.second];
-    MEM[ii.second] -= ii.first;
-    if(ii.first == temp){ 
+    MEM[ii.second] -= N;
+    LAST_MODDED_VALUE = MEM[ii.second];
+    if(N == temp){ 
         aloc.is_perfect_fit = true;
         realocate(ii.second);
     }
@@ -92,17 +95,21 @@ SO2::memoryalloc::aloc_report SO2::memoryalloc::worst_fit(int N){
     int idx = -1;
     for(size_t i = 0; i < memsize(); i++)
         if(MEM[i] >= N && MEM[i] > temp){
-            temp = MEM[i];
-            idx = i;
+            temp = MEM[i]; idx = i;
         }
     if(idx == -1) return aloc;
     if(N == temp){
         MEM[idx] -= N;
+        LAST_MODDED_VALUE = MEM[idx];
         aloc.is_perfect_fit = true;
         aloc.is_allocated = true;
         realocate(idx);
     } 
-    else aloc.is_allocated = true;
+    else{
+        aloc.is_allocated = true;
+        MEM[idx] -= N;
+        LAST_MODDED_VALUE = MEM[idx];
+    }
     return aloc;
 }
 
@@ -111,6 +118,7 @@ SO2::memoryalloc::aloc_report SO2::memoryalloc::next_fit(int N){
     for(size_t i = NEXT_FIT_INDEX; i < memsize(); i++){
         if(MEM[i] == N){
             MEM[i] -= N;
+            LAST_MODDED_VALUE = MEM[i];
             aloc.is_perfect_fit = true; aloc.is_allocated = true;
             NEXT_FIT_INDEX = i;
             realocate(i);
@@ -118,12 +126,19 @@ SO2::memoryalloc::aloc_report SO2::memoryalloc::next_fit(int N){
         }
         if(MEM[i] > N){
             MEM[i] -= N;
+            LAST_MODDED_VALUE = MEM[i];
             aloc.is_allocated = true;
             NEXT_FIT_INDEX = i;
             return aloc;
         }
     }
+    NEXT_FIT_INDEX = 0;
     return aloc;
+}
+
+void SO2::memoryalloc::load_from_buffer(){
+    std::copy(std::begin(BUFFER), std::end(BUFFER), std::begin(MEM));
+    MUTABLE_SIZE = 12;
 }
 
 memoryalloc& memoryalloc::operator=(const memoryalloc &rhs){
@@ -137,7 +152,9 @@ memoryalloc& memoryalloc::operator=(const memoryalloc &rhs){
 std::ostream& operator<<(std::ostream &os, const memoryalloc &ma){
     os << "[ ";
     for(size_t i = 0; i < ma.memsize(); i++){
+        if(ma.MEM[i] == ma.LAST_MODDED_VALUE) os << "\33[1m";
         os << ma.MEM[i];
+        if(ma.MEM[i] == ma.LAST_MODDED_VALUE) os << "\33[0m";
         if(i < ma.memsize() - 1) os << " - ";
     }
     os << " ]";

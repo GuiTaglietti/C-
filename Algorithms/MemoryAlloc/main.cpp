@@ -15,6 +15,7 @@ int main(){
         else if(tempff.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
+    ma.load_from_buffer();
     std::cout << std::endl << "===== Algoritmo Best-fit! =====" << std::endl << std::endl;
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
@@ -23,6 +24,7 @@ int main(){
         else if(tempbf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
+    ma.load_from_buffer();
     std::cout << std::endl  << "===== Algoritmo Worst-fit! =====" << std::endl << std::endl;
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
@@ -31,6 +33,7 @@ int main(){
         else if(tempwf.is_perfect_fit) std::cout << "[" << i << " - " << rands[i] << "] " << ma << " \33[1m Encaixe perfeito \33[0m" << std::endl;
         else std::cout << "[" << i << " - " << rands[i] << "] " << ma << std::endl;
     }
+    ma.load_from_buffer();
     std::cout << std::endl  << "===== Algoritmo Next-fit! =====" << std::endl << std::endl;
     std::cout << "Original " << ma << std::endl;
     for(size_t i = 0; i < RANDS_MAX_SIZE; i++){
