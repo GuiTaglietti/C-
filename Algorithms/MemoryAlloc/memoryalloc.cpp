@@ -26,8 +26,8 @@ SO2::memoryalloc::memoryalloc(const memoryalloc &other){
     NEXT_FIT_INDEX = other.NEXT_FIT_INDEX;
     LAST_MODDED_VALUE = other.LAST_MODDED_VALUE;
     MUTABLE_SIZE = other.MUTABLE_SIZE;
-    std::copy(other.MEM, other.MEM + MUTABLE_SIZE, MEM);
-    std::copy(other.BUFFER, other.BUFFER + MUTABLE_SIZE, BUFFER);
+    std::copy(other.MEM, other.MEM + other.MUTABLE_SIZE, MEM);
+    std::copy(other.BUFFER, other.BUFFER + other.MUTABLE_SIZE, BUFFER);
 }
 
 SO2::memoryalloc::~memoryalloc(){}
