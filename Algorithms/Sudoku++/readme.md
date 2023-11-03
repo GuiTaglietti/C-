@@ -12,8 +12,8 @@ Projeto desenvolvido com o objetivo de resolver sudoku usando um backtracking re
 4. Em caso de erros, execute `make clean` e repita os passos acima.
 5. Caso não tenha o `make` instalado, execute os seguintes comandos:
 
-sudo apt install build-essential
-sudo apt install make
+`sudo apt install build-essential`
+`sudo apt install make`
 
 ### Compilação Manual
 
