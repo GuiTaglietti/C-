@@ -1,11 +1,6 @@
-# Sudoku Solver usando Algoritmo de Backtracking
+# Sudoku++
 
-## Análise e Projeto de Algoritmos
-
-Guilherme Martinelli Taglietti - 192370  
-José Paulo R. Pereira - 192445  
-
-**Observações:** O código foi implementado usando técnicas avançadas de C++ como Include guards, headers, rule of three, delete e overload de operadores. Isso foi feito para garantir um código correto e eficiente.
+Projeto desenvolvido com o objetivo de resolver sudoku usando um backtracking recursivo e uma implementação eficiente.
 
 ## Compilação e Execução
 
