@@ -14,7 +14,7 @@ public:
     std::size_t size() const noexcept;
     std::size_t max_size() const noexcept;
     int index_of(T val) const noexcept;
-    bool empty() const noexcept;
+    constexpr bool empty() const noexcept;
     void push_front(T val);
     void push_back(T val);
     void pop_front();
