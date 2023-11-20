@@ -84,7 +84,7 @@ int Deque<T>::index_of(T val) const noexcept{
 }
 
 template <class T>
-inline bool Deque<T>::empty() const noexcept{
+constexpr bool Deque<T>::empty() const noexcept{
     return CURRENT == 0;
 }
 
