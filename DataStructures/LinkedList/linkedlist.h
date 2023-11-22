@@ -20,6 +20,7 @@ public:
     void erase(T val);
     typename LinkedList<T>::iterator find(T val) const;
     std::size_t size() const noexcept;
+    LinkedList<T>& operator=(const LinkedList<T> &rhs);
 
 private:
     typedef struct Node{
@@ -139,6 +140,21 @@ inline typename LinkedList<T>::iterator LinkedList<T>::begin() const{
 template <class T>
 inline typename LinkedList<T>::iterator LinkedList<T>::end() const{
     return iterator();
+}
+
+template <class T>
+LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &rhs){
+    if(this != &rhs){
+        while(head){
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        _size = 0;
+        for(const T &val : rhs)
+            insert(val);
+    }
+    return *this;
 }
 
 };
