@@ -15,7 +15,7 @@ public:
     [[nodiscard]] bool export_to_file(const QVector<QString> &instruction_log) const override;
 
 private:
-    const char* filename;
+    QString filename;
 };
 
 } // namespace stackinterpreter

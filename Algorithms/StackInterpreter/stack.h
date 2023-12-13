@@ -5,9 +5,9 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "qtextedit.h"
 #pragma once
 
+#include "qtextedit.h"
 #include "memory.h"
 #include "qlineedit.h"
 #include "qwidget.h"
@@ -36,8 +36,8 @@ public:
     friend void operator<<(QLineEdit &os, const Stack &stack);
     friend QStack<int> stackutil::prepare(QStack<int> &stack) noexcept;
 
-    void PUSHI(int /*T*/ value) noexcept;
-    void PUSHI(int /*T*/ value, const QString &description, QVector<QString> &log) noexcept;
+    void PUSHI(int value) noexcept;
+    void PUSHI(int value, const QString &description, QVector<QString> &log) noexcept;
     void PUSH(int hex, const QString &description, QVector<QString> &log) noexcept;
     void POP(int hex, const QString &description, QVector<QString> &log) noexcept;
     void INPUT(QWidget* parent, const QString &description, QVector<QString> &log) noexcept;

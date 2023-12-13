@@ -6,6 +6,8 @@
 #include "instructions.h"
 #include "ui_mainwindow.h"
 #include "QMessageBox"
+#include "QFileDialog"
+#include "QDir"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -65,7 +67,7 @@ void MainWindow::on_instructions_select_currentIndexChanged(int index)
 
 /**
  * @brief Execute the instruction selected in the options selector
- * @note Uses a InstructionHandler class member function (handle_instructions()) to prepare wich instruction will be executed
+ * @note Uses InstructionHandler class member function (handle_instructions() && execute()) to prepare wich instruction will be executed
 */
 void MainWindow::on_exec_button_clicked()
 {
@@ -73,6 +75,8 @@ void MainWindow::on_exec_button_clicked()
     stackinterpreter::instruction_tuple instruction_buffer = instruction_handler.handle_instruction(ui->instructions_select->currentIndex(), ui->flagged_values->text());
     instruction_handler.execute(this, stack, instruction_buffer.instruction, instruction_buffer.value, instruction_handler, ui->instructions_select->currentText());
     update_stack_progressbar();
+    if(ui->instructions_select->currentIndex() == stackinterpreter::Instructions::HLT)
+        ui->instruction_log->setText("");
     *ui->stackostream << stack;
     stack.display_memory_log(*ui->memostream);
     *ui->instruction_log << instruction_handler;
@@ -81,7 +85,8 @@ void MainWindow::on_exec_button_clicked()
 /**
  * @brief Update the progress bar by calculating the percentage to update the progress bar depending on wich size the stack have
 */
-void MainWindow::update_stack_progressbar(){
+void MainWindow::update_stack_progressbar()
+{
     int stack_size = static_cast<int>(stack.get_stack().size());
     int percentage = static_cast<int>((static_cast<float>(stack_size) / stack.get_max_size()) * 100);
     ui->stack_pb->setValue(percentage);
@@ -89,7 +94,11 @@ void MainWindow::update_stack_progressbar(){
 
 void MainWindow::on_cpp_export_button_clicked()
 {
-    stackinterpreter::CPPExporter exporter;
+    QString filename = QFileDialog::getSaveFileName(this, "Save file", QDir::homePath(), "C++ files (*.cpp)");
+    if(filename.isNull())
+        return;
+    filename += ".cpp";
+    stackinterpreter::CPPExporter exporter(filename.toStdString().c_str());
     if(!exporter.export_to_file(instruction_handler.get_log())){
         QMessageBox::critical(this, "Error", "Error exporting to .cpp file, please, try again!");
         return;
@@ -100,7 +109,11 @@ void MainWindow::on_cpp_export_button_clicked()
 
 void MainWindow::on_asm_export_button_clicked()
 {
-    stackinterpreter::ASMExporter exporter;
+    QString filename = QFileDialog::getSaveFileName(this, "Save file", QDir::homePath(), "Assembly files (*.asm)");
+    if(filename.isNull())
+        return;
+    filename += ".asm";
+    stackinterpreter::ASMExporter exporter(filename.toStdString().c_str());
     if(!exporter.export_to_file(instruction_handler.get_log())){
         QMessageBox::critical(this, "Error", "Error exporting to .asm file, please, try again!");
         return;
@@ -135,5 +148,29 @@ void MainWindow::on_options_button_clicked()
     }
     else
         QMessageBox::information(this, "Sucess", "Successfully canceled!");
+}
+
+
+void MainWindow::on_clear_memory_log_button_clicked(){ ui->memostream->setText(""); }
+void MainWindow::on_clear_instructions_log_button_clicked(){ ui->instruction_log->setText(""); }
+
+
+void MainWindow::on_about_triggered()
+{
+    QString about_text =
+        "The Stack Interpreter project is an initiative designed to simulate the Harvard architecture with a focus on stack-based operations. "
+        "In this project, the fundamental computing model follows the principles of the Harvard architecture, where distinct memory spaces are dedicated "
+        "to program instructions and data. Specifically, a stack-based approach is adopted, emphasizing the use of a Last-In-First-Out (LIFO) data structure "
+        "to manage computational tasks.\n\n"
+        "One of the key features of the Stack Interpreter is its ability to export the operations performed on the stack to both C++ and assembly files. "
+        "This functionality facilitates a seamless transition from the high-level representation of the stack operations to the corresponding low-level implementations "
+        "in both C++ and assembly languages. This dual-export capability enhances the project's versatility, allowing users to analyze and further develop their "
+        "stack-based algorithms in different programming environments.\n\n"
+        "By providing a simulation environment for the Harvard architecture, the Stack Interpreter project serves as a valuable tool for both educational and practical purposes. "
+        "It enables users to explore the intricacies of stack-based computing, understand the underlying principles of the Harvard architecture, and experiment with diverse "
+        "algorithms and data structures.\n\n"
+        "Thank you all!\n\n"
+        "Developed by: Guilherme Martinelli Taglietti";
+    QMessageBox::information(this, "Stack Interpreter Project Overview", about_text);
 }
 

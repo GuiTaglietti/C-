@@ -108,6 +108,7 @@ void stackinterpreter::InstructionHandler::execute(QWidget* parent, stackinterpr
 
         case stackinterpreter::Instructions::HLT:
             stack.HLT(description, handler.get_log());
+            handler.clear_log();
             break;
 
         default:

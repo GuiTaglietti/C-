@@ -26,6 +26,10 @@ private slots:
     void on_cpp_export_button_clicked();
     void on_asm_export_button_clicked();
     void on_options_button_clicked();
+    void on_clear_memory_log_button_clicked();
+    void on_clear_instructions_log_button_clicked();
+
+    void on_about_triggered();
 
 private:
     Ui::MainWindow *ui;

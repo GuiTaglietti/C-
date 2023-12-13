@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1311</width>
-    <height>720</height>
+    <height>758</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -209,6 +209,32 @@
      <string>Export to  a file</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="clear_memory_log_button">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>690</y>
+      <width>131</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear memory log</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clear_instructions_log_button">
+    <property name="geometry">
+     <rect>
+      <x>1050</x>
+      <y>690</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear instructions log</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -223,14 +249,14 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="soon"/>
+    <addaction name="about"/>
    </widget>
    <addaction name="mainmenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="soon">
+  <action name="about">
    <property name="text">
-    <string>Soon...</string>
+    <string>About</string>
    </property>
   </action>
  </widget>

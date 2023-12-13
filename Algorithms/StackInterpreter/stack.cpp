@@ -194,7 +194,6 @@ void stackinterpreter::Stack::HLT(const QString &description, QVector<QString> &
         stack.pop();
     stackutil::log_write(description, log);
     clear_log();
-    // ASK FOR .CPP .ASM .FORTH EXPORTS
 }
 
 bool stackinterpreter::Stack::resize_stack(qsizetype new_size) noexcept{

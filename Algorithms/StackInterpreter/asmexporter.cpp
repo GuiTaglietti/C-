@@ -7,13 +7,8 @@
 bool stackinterpreter::ASMExporter::export_to_file(const QVector<QString> &instruction_log) const{
     if(!instruction_log.size())
         return false;
-    QString desktop_path = QDir::homePath() + "/Desktop/";
-    QDir exports_dir(desktop_path + "Exports");
-    if(!exports_dir.exists())
-        exports_dir.mkpath(".");
-    QString path = exports_dir.filePath(filename);
     try{
-        std::ofstream asmfile(path.toStdString());
+        std::ofstream asmfile(filename.toStdString().c_str());
         asmfile << ".section .data\n    stack: .skip 1000\n\n.section .text\n    .global _start\n\n_start:\n    lea rsi, stack\n";
         for(const QString &instruction : instruction_log){
             QStringList parsed = instruction.split("    ");
@@ -54,7 +49,7 @@ bool stackinterpreter::ASMExporter::export_to_file(const QVector<QString> &instr
         asmfile << "    movl $1, %eax\n    xorl %ebx, %ebx\n    int $0x80\n";
         return true;
     } catch(const std::exception &exception){
-        QFile::remove(path);
+        QFile::remove(filename);
         return false;
     }
 }
