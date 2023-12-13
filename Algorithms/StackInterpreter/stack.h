@@ -28,7 +28,7 @@ void log_write(const QString &instruction, QVector<QString> &log, const QString 
 class Stack : public Memory{
 public:
     Stack() : Stack(16){} // Default max size = 16
-    Stack(qsizetype _max_size) : max_size(_max_size){}
+    Stack(qsizetype _max_size);
     Stack(const Stack &cpy) : stack(cpy.stack), max_size(cpy.max_size){}
     virtual ~Stack(){}
     Stack& operator=(const Stack &rhs);
@@ -52,14 +52,18 @@ public:
     void DUP(const QString &description, QVector<QString> &log) noexcept;
     void HLT(const QString &description, QVector<QString> &log) noexcept;
 
+    [[nodiscard]] bool resize_stack(qsizetype new_size) noexcept;
     [[nodiscard]] const QStack<int>& get_stack() const noexcept{ return stack; } /// Inline function
     [[nodiscard]] qsizetype get_max_size() const noexcept{ return max_size; } /// Inline function
+    [[nodiscard]] qsizetype get_max_possible_size() const noexcept{ return max_possible_size; } /// Inline function
 
+    void clear_stack() noexcept{ stack.clear(); } /// Inline function
     void display_memory_log(QTextEdit &os) const noexcept;
 
 private:
     QStack<int> stack;
     qsizetype max_size;
+    const qsizetype max_possible_size = 10000;
 
 };
 

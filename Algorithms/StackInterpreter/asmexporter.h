@@ -12,7 +12,7 @@ public:
     ASMExporter(const ASMExporter &cpy) = delete;
     ASMExporter& operator=(const ASMExporter &rhs) = delete;
 
-    void export_to_file(const QVector<QString> &instruction_log) const override;
+    [[nodiscard]] bool export_to_file(const QVector<QString> &instruction_log) const override;
 
 private:
     const char* filename;

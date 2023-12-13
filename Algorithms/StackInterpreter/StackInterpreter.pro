@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     asmexporter.cpp \
     cppexporter.cpp \
+    customoptions.cpp \
     instruction_handler.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     asmexporter.h \
     cppexporter.h \
+    customoptions.h \
     exporter.h \
     instruction_handler.h \
     instructions.h \

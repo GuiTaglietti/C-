@@ -27,14 +27,18 @@ public:
 
     bool push_in(const mem_slot &slot, stackinterpreter::Stack &stack) noexcept;
     bool pop_out(const mem_slot &slot, stackinterpreter::Stack &stack) noexcept;
+    [[nodiscard]] bool resize_memory(qsizetype new_size) noexcept;
     [[nodiscard]] qsizetype get_max_mem_size() const noexcept { return max_mem_size; } /// Inline function
+    [[nodiscard]] qsizetype get_max_possible_mem_size() const noexcept { return max_possible_mem_size; } /// Inline function
     [[nodiscard]] const QVector<QString>& get_mem_log() const noexcept{ return mem_log; } /// Inline function
-    void clear_log() noexcept { mem_log.clear(); }
+    void clear_log() noexcept { mem_log.clear(); } /// Inline function
+    void clear_memory() noexcept { mem.clear(); } /// Inline function
 
 protected:
     QVector<mem_slot> mem;
     QVector<QString> mem_log;
     qsizetype max_mem_size;
+    const qsizetype max_possible_mem_size = 10000;
     [[nodiscard]] bool is_occupied(int address) const noexcept { return mem[address].occupied; } /// Inline function
 };
 

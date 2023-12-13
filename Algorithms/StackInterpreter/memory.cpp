@@ -7,7 +7,10 @@ stackinterpreter::Memory::Memory(qsizetype _max_mem_size) : max_mem_size(_max_me
     mem.assign(max_mem_size, stackinterpreter::mem_slot());
 }
 
-stackinterpreter::Memory::Memory(const Memory &cpy) : mem(cpy.mem), max_mem_size(cpy.max_mem_size){}
+stackinterpreter::Memory::Memory(const Memory &cpy) : mem(cpy.mem), max_mem_size(cpy.max_mem_size){
+    mem.resize(max_mem_size);
+    mem.assign(max_mem_size, stackinterpreter::mem_slot());
+}
 
 stackinterpreter::Memory& stackinterpreter::Memory::operator=(const Memory &rhs){
     if(this != &rhs){
@@ -39,5 +42,12 @@ bool stackinterpreter::Memory::pop_out(const mem_slot &slot, stackinterpreter::S
     int value = slot.value;
     mem[slot.address] = stackinterpreter::mem_slot();
     stack.PUSHI(value);
+    return true;
+}
+
+bool stackinterpreter::Memory::resize_memory(qsizetype new_size) noexcept{
+    if(new_size < max_mem_size && new_size < mem.size())
+        return false;
+    max_mem_size = new_size;
     return true;
 }

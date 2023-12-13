@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "asmexporter.h"
 #include "cppexporter.h"
+#include "customoptions.h"
 #include "instruction_handler.h"
 #include "instructions.h"
 #include "ui_mainwindow.h"
+#include "QMessageBox"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,11 +15,13 @@ MainWindow::MainWindow(QWidget *parent)
     init_selector();
     ui->stack_pb->setRange(0, 100);
     ui->stack_pb->setValue(0);
+    ui->label_stack->setText("Stack (Current max size: " + QString::number(stack.get_max_size()) + ")");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete options_dialog_box;
 }
 
 /**
@@ -83,31 +87,53 @@ void MainWindow::update_stack_progressbar(){
     ui->stack_pb->setValue(percentage);
 }
 
-
-void MainWindow::on_reset_instruction_log_clicked(QAbstractButton *button)
-{
-    button->animateClick();
-    ui->instruction_log->setText("");
-}
-
-
-void MainWindow::on_reset_memory_log_clicked(QAbstractButton *button)
-{
-    button->animateClick();
-    ui->memostream->setText("");
-}
-
-
 void MainWindow::on_cpp_export_button_clicked()
 {
     stackinterpreter::CPPExporter exporter;
-    exporter.export_to_file(instruction_handler.get_log());
+    if(!exporter.export_to_file(instruction_handler.get_log())){
+        QMessageBox::critical(this, "Error", "Error exporting to .cpp file, please, try again!");
+        return;
+    }
+    QMessageBox::information(this, "Success", "File successfully exported to .cpp!");
 }
 
 
 void MainWindow::on_asm_export_button_clicked()
 {
     stackinterpreter::ASMExporter exporter;
-    exporter.export_to_file(instruction_handler.get_log());
+    if(!exporter.export_to_file(instruction_handler.get_log())){
+        QMessageBox::critical(this, "Error", "Error exporting to .asm file, please, try again!");
+        return;
+    }
+    QMessageBox::information(this, "Success", "File successfully exported to .asm!");
+}
+
+
+void MainWindow::on_options_button_clicked()
+{
+    options_dialog_box = new stackinterpreter::CustomOptions(this);
+    // options_dialog_box->init();
+    if(options_dialog_box->exec() == QDialog::Accepted){
+        bool is_integer_temp1, is_integer_temp2;
+        QString temp1 = options_dialog_box->get_stack_size_input(); QString temp2 = options_dialog_box->get_memory_size_input();
+        int value1 = temp1.toInt(&is_integer_temp1), value2 = temp2.toInt(&is_integer_temp2);
+        if(is_integer_temp1 && is_integer_temp2 && value1 <= stack.get_max_possible_size() && value2 <= stack.get_max_possible_mem_size()){
+            if(!stack.resize_stack(value1) || !stack.resize_memory(value2)){
+                QMessageBox::critical(this, "Error", "Not allowed to set sizes smallers than the actual number of elements in the stack/memory!");
+                return;
+            }
+            int stack_size = static_cast<int>(stack.get_stack().size());
+            int percentage = static_cast<int>((static_cast<float>(stack_size) / stack.get_max_size()) * 100);
+            ui->stack_pb->setValue(percentage);
+            ui->label_stack->setText("Stack (Current max size: " + QString::number(stack.get_max_size()) + ")");
+            QMessageBox::information(this, "Success", "New sizes successfully applied!");
+        }
+        else if(value1 > stack.get_max_possible_size() || value2 > stack.get_max_possible_mem_size())
+            QMessageBox::critical(this, "Error", "Please, insert a smaller value!");
+        else
+            QMessageBox::critical(this, "Error", "Type a valid number!");
+    }
+    else
+        QMessageBox::information(this, "Sucess", "Successfully canceled!");
 }
 

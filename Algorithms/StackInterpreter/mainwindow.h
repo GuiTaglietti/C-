@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "customoptions.h"
 #include "instruction_handler.h"
-#include "qabstractbutton.h"
 #include "stack.h"
 #include <QMainWindow>
 
@@ -23,14 +23,14 @@ private slots:
     void on_instructions_select_currentIndexChanged(int index);
     void on_exec_button_clicked();
     void update_stack_progressbar();
-    void on_reset_instruction_log_clicked(QAbstractButton *button);
-    void on_reset_memory_log_clicked(QAbstractButton *button);
     void on_cpp_export_button_clicked();
     void on_asm_export_button_clicked();
+    void on_options_button_clicked();
 
 private:
     Ui::MainWindow *ui;
     stackinterpreter::InstructionHandler instruction_handler;
     stackinterpreter::Stack stack;
+    stackinterpreter::CustomOptions *options_dialog_box;
 };
 #endif // MAINWINDOW_H

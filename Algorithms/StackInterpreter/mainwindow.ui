@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1311</width>
-    <height>754</height>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,9 +69,9 @@
    <widget class="QLabel" name="label_stack">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>530</x>
       <y>170</y>
-      <width>67</width>
+      <width>211</width>
       <height>17</height>
      </rect>
     </property>
@@ -157,49 +157,10 @@
      <string>Memory</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="options_button">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>260</y>
-      <width>181</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Options</string>
-    </property>
-   </widget>
-   <widget class="QDialogButtonBox" name="reset_memory_log">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>690</y>
-      <width>166</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Reset</set>
-    </property>
-   </widget>
-   <widget class="QDialogButtonBox" name="reset_instruction_log">
-    <property name="geometry">
-     <rect>
-      <x>1070</x>
-      <y>690</y>
-      <width>166</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Reset</set>
-    </property>
-   </widget>
    <widget class="QPushButton" name="cpp_export_button">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>510</x>
       <y>520</y>
       <width>111</width>
       <height>25</height>
@@ -212,7 +173,7 @@
    <widget class="QPushButton" name="asm_export_button">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>640</x>
       <y>520</y>
       <width>111</width>
       <height>25</height>
@@ -220,6 +181,32 @@
     </property>
     <property name="text">
      <string>Export to .asm</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="options_button">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>260</y>
+      <width>181</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Size options</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>490</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Export to  a file</string>
     </property>
    </widget>
   </widget>
@@ -232,8 +219,20 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="mainmenu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="soon"/>
+   </widget>
+   <addaction name="mainmenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="soon">
+   <property name="text">
+    <string>Soon...</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

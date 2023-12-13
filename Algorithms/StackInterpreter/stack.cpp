@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
+stackinterpreter::Stack::Stack(qsizetype _max_size){ max_size =_max_size > max_possible_size ? max_possible_size : _max_size; }
+
 /**
  * @namespace stackinterpreter
  * @class Stack
@@ -20,7 +22,7 @@ stackinterpreter::Stack& stackinterpreter::Stack::operator=(const Stack &rhs){
     return *this;
 }
 
-void stackinterpreter::Stack::PUSHI(int /*T*/ value) noexcept{
+void stackinterpreter::Stack::PUSHI(int value) noexcept{
     if(stack.size() == max_size){
         QMessageBox::critical(nullptr, "Error!", "Stack overflow! Please clear or resize the stack to continue...");
         return;
@@ -28,7 +30,7 @@ void stackinterpreter::Stack::PUSHI(int /*T*/ value) noexcept{
     stack.push(value);
 }
 
-void stackinterpreter::Stack::PUSHI(int /*T*/ value, const QString &description, QVector<QString> &log) noexcept{
+void stackinterpreter::Stack::PUSHI(int value, const QString &description, QVector<QString> &log) noexcept{
     if(stack.size() == max_size){
         QMessageBox::critical(nullptr, "Error!", "Stack overflow! Please clear or resize the stack to continue...");
         return;
@@ -48,9 +50,10 @@ void stackinterpreter::Stack::PUSH(int value, const QString &description, QVecto
         return;
     int value1 = stack.top();
     bool ok = push_in(stackinterpreter::mem_slot(value, value1, true), *this);
-    if(ok)
+    if(ok){
         mem_log.append("Address " + QString::number(value) + " pushed in memory the value: " + QString::number(value1) + "\n");
-    stackutil::log_write(description, log, QString::number(value1));
+        stackutil::log_write(description, log, QString::number(value1));
+    }
 }
 
 void stackinterpreter::Stack::POP(int value, const QString &description, QVector<QString> &log) noexcept{
@@ -62,9 +65,10 @@ void stackinterpreter::Stack::POP(int value, const QString &description, QVector
         return;
     stackinterpreter::mem_slot slot_buffer = stackinterpreter::mem_slot(value, mem[value].value, false);
     bool ok = pop_out(slot_buffer, *this);
-    if(ok)
+    if(ok){
         mem_log.append("Address " + QString::number(value) + " removed the value " + QString::number(slot_buffer.value) + " from the memory and pushed it to the stack\n" );
-    stackutil::log_write(description, log, QString::number(value));
+        stackutil::log_write(description, log, QString::number(value));
+    }
 }
 
 void stackinterpreter::Stack::INPUT(QWidget *parent, const QString &description, QVector<QString> &log) noexcept{
@@ -193,6 +197,13 @@ void stackinterpreter::Stack::HLT(const QString &description, QVector<QString> &
     // ASK FOR .CPP .ASM .FORTH EXPORTS
 }
 
+bool stackinterpreter::Stack::resize_stack(qsizetype new_size) noexcept{
+    if(new_size < max_size && new_size < stack.size())
+        return false;
+    max_size = new_size;
+    return true;
+}
+
 void stackinterpreter::Stack::display_memory_log(QTextEdit &os) const noexcept{
     QString text;
     for(const QString &mem_log_str : mem_log)
@@ -201,7 +212,7 @@ void stackinterpreter::Stack::display_memory_log(QTextEdit &os) const noexcept{
 }
 
 void stackinterpreter::operator<<(QLineEdit &os, const stackinterpreter::Stack &stack){
-    QStack<int> /* T template type soon */ stack_buffer = stack.get_stack();
+    QStack<int> stack_buffer = stack.get_stack();
     stack_buffer = stackinterpreter::stackutil::prepare(stack_buffer);
     QString text;
     while(!stack_buffer.empty()){
